@@ -85,6 +85,69 @@
             box-shadow: var(--shadow);
         }
 
+        /* Currency Converter Widget Live */
+        .converter-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+            border-right: 4px solid #00B4DB;
+        }
+
+        .converter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .converter-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rate-status {
+            font-size: 0.68rem;
+            color: #64748B;
+            background: #F8FAFC;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .converter-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.7rem;
+            color: #64748B;
+            margin-bottom: 2px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #00B4DB;
+        }
+
         /* Info Cards Grid Mobile */
         .info-cards {
             display: grid;
@@ -201,6 +264,7 @@
             align-items: center;
             gap: 6px;
             flex-shrink: 0;
+            cursor: pointer;
         }
 
         .tab-btn.active {
@@ -313,6 +377,26 @@
             color: #94A3B8;
         }
 
+        /* Dictionary Card Styles */
+        .dict-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 8px;
+        }
+
+        .dict-item {
+            background: #F8FAFC;
+            padding: 8px 12px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-right: 3px solid #FF8008;
+        }
+
+        .dict-hebrew { font-weight: 800; font-size: 0.82rem; }
+        .dict-greek { font-size: 0.8rem; color: #0284C7; font-weight: 700; }
+
         /* Timeline Mobile */
         .timeline {
             position: relative;
@@ -345,6 +429,13 @@
             box-shadow: var(--shadow);
         }
 
+        .timeline-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
         .timeline-time {
             display: inline-block;
             background: #FFF1F2;
@@ -353,7 +444,24 @@
             padding: 2px 8px;
             border-radius: 10px;
             font-size: 0.72rem;
-            margin-bottom: 4px;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #E0F2FE;
+            color: #0284C7;
+            text-decoration: none;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .map-btn:active {
+            background: #BAE6FD;
         }
 
         .timeline-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 2px; }
@@ -467,6 +575,24 @@
             <i class="fa-solid fa-plane-departure"></i> סופ"ש מטורף של ים, מסיבות, אוכל ושופינג! 🥂✨
         </div>
 
+        <!-- Live Currency Converter Card -->
+        <div class="converter-card">
+            <div class="converter-header">
+                <div class="converter-title"><i class="fa-solid fa-calculator" style="color: #00B4DB;"></i> מחשבון המרת מטבע</div>
+                <div class="rate-status" id="rateStatus">שער: בטעינה...</div>
+            </div>
+            <div class="converter-inputs">
+                <div class="input-group">
+                    <label>סכום ביורו (€)</label>
+                    <input type="number" id="eurInput" placeholder="0" oninput="convertEurToIls()">
+                </div>
+                <div class="input-group">
+                    <label>סה"כ בשקלים (₪)</label>
+                    <input type="text" id="ilsOutput" placeholder="0 ₪" readonly style="background-color: #F8FAFC;">
+                </div>
+            </div>
+        </div>
+
         <!-- Info Cards Grid -->
         <div class="info-cards">
             <div class="info-card">
@@ -532,14 +658,17 @@
             </div>
         </div>
 
-        <!-- Scrollable Navigation Tabs -->
+        <!-- Horizontal Scroll Tabs -->
         <div class="tabs-wrapper">
             <div class="tabs">
                 <button class="tab-btn active" onclick="openTab(event, 'flights')">
                     <i class="fa-solid fa-ticket"></i> כרטיסים
                 </button>
                 <button class="tab-btn" onclick="openTab(event, 'packing')">
-                    <i class="fa-solid fa-suitcase"></i> רשימת ציוד
+                    <i class="fa-solid fa-suitcase"></i> ציוד
+                </button>
+                <button class="tab-btn" onclick="openTab(event, 'dict')">
+                    <i class="fa-solid fa-language"></i> מילון יווני
                 </button>
                 <button class="tab-btn" onclick="openTab(event, 'day1')">
                     <i class="fa-solid fa-moon"></i> יום ד' | 2.9
@@ -601,51 +730,74 @@
                     <li class="checklist-item"><label><input type="checkbox"> <span>דרכונים בתוקף</span></label></li>
                     <li class="checklist-item"><label><input type="checkbox"> <span>רישיון נהיגה + כרטיסי אשראי</span></label></li>
                     <li class="checklist-item"><label><input type="checkbox"> <span>ביטוח נסיעות לחו"ל</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>כרטיסי טיסה + אישור מלון (צילומי מסך)</span></label></li>
+                    <li class="checklist-item"><label><input type="checkbox"> <span>כרטיסי טיסה + אישור מלון</span></label></li>
                 </ul>
             </div>
 
             <div class="packing-card">
-                <div class="packing-category-title"><i class="fa-solid fa-person"></i> ביגוד והנעלה - שימי (4 ימים)</div>
+                <div class="packing-category-title"><i class="fa-solid fa-person"></i> ביגוד והנעלה - שימי</div>
                 <ul class="checklist">
-                    <li class="checklist-item"><label><input type="checkbox"> <span>5 חולצות קצרות / מכופתרות קלות</span></label></li>
+                    <li class="checklist-item"><label><input type="checkbox"> <span>5 חולצות קצרות / מכופתרות</span></label></li>
                     <li class="checklist-item"><label><input type="checkbox"> <span>3 מכנסוני קז'ואל / שורטס</span></label></li>
                     <li class="checklist-item"><label><input type="checkbox"> <span>2 בגדי ים</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>2 לוקים לערב / מסיבה (מכנסיים ארוכים קלים + מכופתרת)</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>לבנים וגרביים ל-4 ימים</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>נעלי הליכה נוחות + נעלי ערב + כפכפים לים</span></label></li>
+                    <li class="checklist-item"><label><input type="checkbox"> <span>2 לוקים לערב (מכנסיים ארוכים קלים)</span></label></li>
+                    <li class="checklist-item"><label><input type="checkbox"> <span>נעלי הליכה + נעלי ערב + כפכפים</span></label></li>
                 </ul>
             </div>
 
             <div class="packing-card">
-                <div class="packing-category-title"><i class="fa-solid fa-person-dress"></i> ביגוד והנעלה - מורן (4 ימים)</div>
+                <div class="packing-category-title"><i class="fa-solid fa-person-dress"></i> ביגוד והנעלה - מורן</div>
                 <ul class="checklist">
                     <li class="checklist-item"><label><input type="checkbox"> <span>4 שמלות קיץ / סט חצאית וטופ</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>2-3 בגדי ים + עליוניות / גלביה לים</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>2 לוקים מושקעים לערב ולמסיבה ב-Breeze</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>לבנים והלבשה תחתונה ל-4 ימים</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>סנדלים נוחים + נעלי עקב/ערב + כפכפי ים</span></label></li>
+                    <li class="checklist-item"><label><input type="checkbox"> <span>2-3 בגדי ים + עליוניות</span></label></li>
+                    <li class="checklist-item"><label><input type="checkbox"> <span>2 לוקים מושקעים לערב ומסיבות</span></label></li>
+                    <li class="checklist-item"><label><input type="checkbox"> <span>סנדלים נוחים + נעלי ערב + כפכפים</span></label></li>
                 </ul>
             </div>
+        </div>
 
+        <!-- DICTIONARY TAB -->
+        <div id="dict" class="tab-content">
             <div class="packing-card">
-                <div class="packing-category-title"><i class="fa-solid fa-pump-soap"></i> טיפוח, טואלטיקה וים</div>
-                <ul class="checklist">
-                    <li class="checklist-item"><label><input type="checkbox"> <span>קרם הגנה מהשמש + קרם לאחר שיזוף</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>משקפי שמש (זוג לכל אחד)</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>תיק כלי רחצה, מברשות ומשחת שיניים</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>בושם, דאודורנט, איפור ומוצרי שיער</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>עזרה ראשונה קלה (משככי כאבים, פלסטרים)</span></label></li>
-                </ul>
-            </div>
-
-            <div class="packing-card">
-                <div class="packing-category-title"><i class="fa-solid fa-plug"></i> גאדג'טים ואלקטרוניקה</div>
-                <ul class="checklist">
-                    <li class="checklist-item"><label><input type="checkbox"> <span>מטענים לטלפונים</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>סוללה ניידת (Power Bank)</span></label></li>
-                    <li class="checklist-item"><label><input type="checkbox"> <span>אוזניות לטיסה</span></label></li>
-                </ul>
+                <div class="packing-category-title"><i class="fa-solid fa-comments"></i> מילים וביטויים ביוונית</div>
+                <div class="dict-grid">
+                    <div class="dict-item">
+                        <span class="dict-hebrew">שלום / היי</span>
+                        <span class="dict-greek">יאסו (Yassou)</span>
+                    </div>
+                    <div class="dict-item">
+                        <span class="dict-hebrew">תודה</span>
+                        <span class="dict-greek">אפחריסטו (Efcharisto)</span>
+                    </div>
+                    <div class="dict-item">
+                        <span class="dict-hebrew">בבקשה</span>
+                        <span class="dict-greek">פרקלו (Parakalo)</span>
+                    </div>
+                    <div class="dict-item">
+                        <span class="dict-hebrew">כן</span>
+                        <span class="dict-greek">נה (Nai)</span>
+                    </div>
+                    <div class="dict-item">
+                        <span class="dict-hebrew">לא</span>
+                        <span class="dict-greek">אוכי (Ochi)</span>
+                    </div>
+                    <div class="dict-item">
+                        <span class="dict-hebrew">בוקר טוב</span>
+                        <span class="dict-greek">קלימרה (Kalimera)</span>
+                    </div>
+                    <div class="dict-item">
+                        <span class="dict-hebrew">ערב טוב</span>
+                        <span class="dict-greek">קליספרה (Kalispera)</span>
+                    </div>
+                    <div class="dict-item">
+                        <span class="dict-hebrew">החשבון בבקשה</span>
+                        <span class="dict-greek">לוֹגַרְיַאסְמוֹ פַרַקַלוֹ</span>
+                    </div>
+                    <div class="dict-item">
+                        <span class="dict-hebrew">לחיים!</span>
+                        <span class="dict-greek">יאמאס (Yamas)</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -654,21 +806,30 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">18:50 - 19:55</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">18:50 - 19:55</span>
+                            <a href="https://maps.google.com/?q=Larnaca+International+Airport" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">טיסה ללרנקה</div>
                         <div class="timeline-desc">טיסת TUS Airways U8107. נחיתה ב-19:55.</div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">20:30 - 21:30</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">20:30 - 21:30</span>
+                            <a href="https://maps.google.com/?q=NYX+Hotel+Limassol" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">הסעה למלון</div>
                         <div class="timeline-desc">נסיעה פרטית למלון NYX Limassol.</div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">22:00 והלאה</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">22:00 והלאה</span>
+                            <a href="https://maps.google.com/?q=Library+Bar+Limassol" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">דרינק בעיר העתיקה</div>
                         <div class="timeline-desc">יציאה רגלית לקוקטייל ב-Library Bar.</div>
                     </div>
@@ -693,28 +854,40 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">11:00 - 14:00</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">11:00 - 14:00</span>
+                            <a href="https://maps.google.com/?q=Anexartisias+Street+Limassol" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">קפה ושופינג</div>
-                        <div class="timeline-desc">שיטוט זוגי בעיר העתיקה ובAnexartisias.</div>
+                        <div class="timeline-desc">שיטוט זוגי בעיר העתיקה וברחוב Anexartisias.</div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">14:00 - 17:00</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">14:00 - 17:00</span>
+                            <a href="https://maps.google.com/?q=NYX+Hotel+Limassol" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">בריכת הרופטופ</div>
                         <div class="timeline-desc">זמן איכות ברופטופ של NYX.</div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">17:00 - 19:30</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">17:00 - 19:30</span>
+                            <a href="https://maps.google.com/?q=Columbia+Steak+House+Limassol" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">מסעדת בשרים ושקיעה</div>
                         <div class="timeline-desc">ארוחה ב-Columbia Steak House וטיול בנמל.</div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">22:00 והלאה</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">22:00 והלאה</span>
+                            <a href="https://maps.google.com/?q=Breeze+Summer+Club+Limassol" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">מסיבה ב-Breeze</div>
                         <div class="timeline-desc">יוצאים לרקוד ב-Breeze Summer Club!</div>
                     </div>
@@ -739,14 +912,20 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">11:00 - 18:00</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">11:00 - 18:00</span>
+                            <a href="https://maps.google.com/?q=Columbia+Beach+Limassol" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">Columbia Beach</div>
                         <div class="timeline-desc">מיטות שיזוף, בריכה, ים וקוקטיילים.</div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">21:00 - 23:30</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">21:00 - 23:30</span>
+                            <a href="https://maps.google.com/?q=Limassol+Marina" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">ארוחה במרינה</div>
                         <div class="timeline-desc">ארוחת ערב זוגית מול המגה-יאכטות.</div>
                     </div>
@@ -771,21 +950,30 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">10:00 - 13:00</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">10:00 - 13:00</span>
+                            <a href="https://maps.google.com/?q=Limassol+Old+Town" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">בראנץ' ושופינג אחרון</div>
                         <div class="timeline-desc">בראנץ' בעיר העתיקה וקניות אחרונות.</div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">17:30</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">17:30</span>
+                            <a href="https://maps.google.com/?q=NYX+Hotel+Limassol" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">איסוף לשדה</div>
                         <div class="timeline-desc">הסעה פרטית לשדה התעופה בלרנקה.</div>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-card">
-                        <span class="timeline-time">20:30</span>
+                        <div class="timeline-header-row">
+                            <span class="timeline-time">20:30</span>
+                            <a href="https://maps.google.com/?q=Larnaca+International+Airport" target="_blank" class="map-btn"><i class="fa-solid fa-location-dot"></i> ניווט</a>
+                        </div>
                         <div class="timeline-title">טיסה חזרה</div>
                         <div class="timeline-desc">טיסה U8102, נחיתה ב-21:30 בישראל.</div>
                     </div>
@@ -835,6 +1023,36 @@
     </div>
 
     <script>
+        var liveExchangeRate = 4.0; // ברירת מחדל לגיבוי
+
+        // משבית שער חליפין בלייב בטעינה
+        async function fetchLiveRate() {
+            var statusElem = document.getElementById("rateStatus");
+            try {
+                var response = await fetch('https://open.er-api.com/v6/latest/EUR');
+                var data = await response.json();
+                if (data && data.rates && data.rates.ILS) {
+                    liveExchangeRate = data.rates.ILS;
+                    statusElem.innerText = "שער חי: 1€ = " + liveExchangeRate.toFixed(2) + " ₪";
+                    statusElem.style.color = "#059669";
+                } else {
+                    statusElem.innerText = "שער משוער: 1€ = 4.0 ₪";
+                }
+            } catch (error) {
+                statusElem.innerText = "שער משוער: 1€ = 4.0 ₪";
+            }
+        }
+
+        function convertEurToIls() {
+            var eur = document.getElementById("eurInput").value;
+            if (eur > 0) {
+                var ils = (eur * liveExchangeRate).toFixed(2);
+                document.getElementById("ilsOutput").value = ils + " ₪";
+            } else {
+                document.getElementById("ilsOutput").value = "0 ₪";
+            }
+        }
+
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -875,6 +1093,11 @@
         }
 
         setInterval(nextSlide, 4000);
+
+        // טעינת שער בזמן אמת בפתיחת הדף
+        window.onload = function() {
+            fetchLiveRate();
+        };
     </script>
 </body>
 </html>
