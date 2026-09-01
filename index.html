@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חופשת הקיץ של שימי ומורן בלימסול</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-grad: linear-gradient(135deg, #FF512F, #DD2476);
+            --secondary-grad: linear-gradient(135deg, #00B4DB, #0083B0);
+            --sunset-grad: linear-gradient(135deg, #FF8008, #FFC837);
+            --dark: #0F172A;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Heebo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #F1F5F9;
+            color: var(--dark);
+            line-height: 1.5;
+            padding-bottom: 30px;
+        }
+
+        header {
+            background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.8)), 
+                        url('https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            color: white;
+            padding: 35px 15px 45px 15px;
+            text-align: center;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .badge {
+            background: var(--primary-grad);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            font-weight: 900;
+            margin-bottom: 6px;
+            color: #FFFFFF;
+        }
+
+        header p {
+            font-size: 0.88rem;
+            opacity: 0.95;
+        }
+
+        .container {
+            width: 100%;
+            padding: 0 12px;
+            margin-top: -20px;
+        }
+
+        .couple-banner {
+            background: var(--sunset-grad);
+            color: white;
+            padding: 12px;
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 0.88rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Info Cards Grid Mobile */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 10px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+            border-bottom: 3px solid #FF512F;
+        }
+
+        .info-card:nth-child(2) { border-bottom-color: #00B4DB; }
+        .info-card:nth-child(3) { border-bottom-color: #9B51E0; }
+        .info-card:nth-child(4) { border-bottom-color: #FFC837; }
+
+        .info-card i {
+            font-size: 1.3rem;
+            color: #FF512F;
+        }
+
+        .info-card-text h4 {
+            font-size: 0.72rem;
+            color: #64748B;
+        }
+
+        .info-card-text p {
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+
+        /* Weather Section with Cyprus Background Images */
+        .weather-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+        }
+
+        .weather-header h3 {
+            font-size: 0.98rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .weather-day-card {
+            color: white;
+            padding: 10px 8px;
+            border-radius: 12px;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            box-shadow: inset 0 0 0 1000px rgba(15, 23, 42, 0.55);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Image backgrounds */
+        .weather-day-card:nth-child(1) {
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80');
+        }
+        .weather-day-card:nth-child(2) {
+            background-image: url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80');
+        }
+        .weather-day-card:nth-child(3) {
+            background-image: url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=400&q=80');
+        }
+        .weather-day-card:nth-child(4) {
+            background-image: url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80');
+        }
+
+        .weather-day-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .weather-icon {
+            font-size: 1.4rem;
+            color: #FFD166;
+            margin: 2px 0;
+        }
+
+        .weather-temp-range {
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .weather-temp-sub {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+
+        /* Horizontal Scroll Tabs */
+        .tabs-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tabs {
+            display: inline-flex;
+            gap: 8px;
+        }
+
+        .tab-btn {
+            background: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--dark);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-grad);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tickets Layout */
+        .ticket-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 14px;
+            margin-bottom: 12px;
+            border-top: 4px solid #00B4DB;
+        }
+
+        .ticket-header {
+            border-bottom: 1px dashed #E2E8F0;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+
+        .ticket-header h3 {
+            font-size: 0.95rem;
+            color: #00B4DB;
+            margin-bottom: 2px;
+        }
+
+        .ticket-header p {
+            font-size: 0.72rem;
+            color: #64748B;
+        }
+
+        .ticket-pnr {
+            display: inline-block;
+            background: #E0F2FE;
+            color: #0369A1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        .ticket-body {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .ticket-info label {
+            display: block;
+            font-size: 0.68rem;
+            color: #64748B;
+        }
+
+        .ticket-info span {
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        .passengers-list {
+            background: white;
+            padding: 10px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        /* Timeline Mobile */
+        .timeline {
+            position: relative;
+            padding-right: 14px;
+            border-right: 2px solid #CBD5E1;
+            margin-bottom: 15px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -19px;
+            top: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #FF512F;
+            border: 2px solid white;
+        }
+
+        .timeline-card {
+            background: white;
+            padding: 12px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-time {
+            display: inline-block;
+            background: #FFF1F2;
+            color: #E11D48;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            margin-bottom: 4px;
+        }
+
+        .timeline-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .timeline-desc {
+            color: #475569;
+            font-size: 0.8rem;
+        }
+
+        /* Gallery Grid */
+        .gallery-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            margin: 15px 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #DDD;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* Carousel Mobile */
+        .carousel-section {
+            background: var(--dark);
+            color: white;
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            margin-top: 15px;
+        }
+
+        .carousel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .carousel-header h3 {
+            font-size: 0.9rem;
+            color: #FFD166;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rec-slide {
+            display: none;
+        }
+
+        .rec-slide.active {
+            display: block;
+        }
+
+        .rec-slide h4 {
+            font-size: 0.85rem;
+            color: #38BDF8;
+            margin-bottom: 4px;
+        }
+
+        .rec-slide p {
+            font-size: 0.78rem;
+            color: #E2E8F0;
+        }
+
+        .carousel-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            justify-content: flex-end;
+        }
+
+        .carousel-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="badge"><i class="fa-solid fa-heart"></i> חופשה זוגית</span>
+        <h1>שימי & מורן בלימסול</h1>
+        <p><i class="fa-solid fa-calendar-days"></i> 2 - 5 בספטמבר 2026 | NYX Hotel</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="couple-banner">
+            <i class="fa-solid fa-plane-departure"></i> סופ"ש מטורף של ים, מסיבות, אוכל ושופינג! 🥂✨
+        </div>
+
+        <!-- Info Cards Grid -->
+        <div class="info-cards">
+            <div class="info-card">
+                <i class="fa-solid fa-plane-arrival"></i>
+                <div class="info-card-text">
+                    <h4>טיסת הלוך</h4>
+                    <p>2.9 | 18:50</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <i class="fa-solid fa-plane-departure"></i>
+                <div class="info-card-text">
+                    <h4>טיסת חזור</h4>
+                    <p>5.9 | 20:30</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <i class="fa-solid fa-hotel"></i>
+                <div class="info-card-text">
+                    <h4>מלון</h4>
+                    <p>NYX Limassol</p>
+                </div>
+            </div>
+            <div class="info-card">
+                <i class="fa-solid fa-car"></i>
+                <div class="info-card-text">
+                    <h4>הסעה</h4>
+                    <p>פרטית לשדה</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Section -->
+        <div class="weather-section">
+            <div class="weather-header">
+                <h3><i class="fa-solid fa-cloud-sun" style="color: #FF8008;"></i> תחזית מזג אוויר ללימסול</h3>
+            </div>
+            <div class="weather-grid">
+                <div class="weather-day-card">
+                    <div class="weather-day-title">יום ד' | 2.9</div>
+                    <div class="weather-icon"><i class="fa-solid fa-sun"></i></div>
+                    <div class="weather-temp-range">31°C</div>
+                    <div class="weather-temp-sub">לילה: 26°C</div>
+                </div>
+                <div class="weather-day-card">
+                    <div class="weather-day-title">יום ה' | 3.9</div>
+                    <div class="weather-icon"><i class="fa-solid fa-sun"></i></div>
+                    <div class="weather-temp-range">31°C</div>
+                    <div class="weather-temp-sub">לילה: 25°C</div>
+                </div>
+                <div class="weather-day-card">
+                    <div class="weather-day-title">יום ו' | 4.9</div>
+                    <div class="weather-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+                    <div class="weather-temp-range">31°C</div>
+                    <div class="weather-temp-sub">לילה: 24°C</div>
+                </div>
+                <div class="weather-day-card">
+                    <div class="weather-day-title">יום ש' | 5.9</div>
+                    <div class="weather-icon"><i class="fa-solid fa-sun"></i></div>
+                    <div class="weather-temp-range">30°C</div>
+                    <div class="weather-temp-sub">לילה: 25°C</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Navigation Tabs -->
+        <div class="tabs-wrapper">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'flights')">
+                    <i class="fa-solid fa-ticket"></i> כרטיסים
+                </button>
+                <button class="tab-btn" onclick="openTab(event, 'day1')">
+                    <i class="fa-solid fa-moon"></i> יום ד' | 2.9
+                </button>
+                <button class="tab-btn" onclick="openTab(event, 'day2')">
+                    <i class="fa-solid fa-utensils"></i> יום ה' | 3.9
+                </button>
+                <button class="tab-btn" onclick="openTab(event, 'day3')">
+                    <i class="fa-solid fa-umbrella-beach"></i> יום ו' | 4.9
+                </button>
+                <button class="tab-btn" onclick="openTab(event, 'day4')">
+                    <i class="fa-solid fa-bag-shopping"></i> יום ש' | 5.9
+                </button>
+            </div>
+        </div>
+
+        <!-- FLIGHTS TAB -->
+        <div id="flights" class="tab-content active">
+            <div class="passengers-list">
+                <div><i class="fa-solid fa-users" style="color:#00B4DB;"></i> <strong>נוסעים:</strong></div>
+                <div><i class="fa-solid fa-user"></i> MR. KRAVCIK SHIMON ISRAEL</div>
+                <div><i class="fa-solid fa-user-pink"></i> MRS. KRAVCIK MORAN</div>
+            </div>
+
+            <div class="ticket-card">
+                <div class="ticket-header">
+                    <h3><i class="fa-solid fa-plane-departure"></i> הלוך: TLV ⬅ LCA</h3>
+                    <p>TUS AIRWAYS | טיסה U8107</p>
+                    <div class="ticket-pnr">PNR: 2528E72D</div>
+                </div>
+                <div class="ticket-body">
+                    <div class="ticket-info"><label>תאריך</label><span>יום ד', 02.09.26</span></div>
+                    <div class="ticket-info"><label>המראה</label><span>18:50 TLV</span></div>
+                    <div class="ticket-info"><label>נחיתה</label><span>19:55 LCA</span></div>
+                    <div class="ticket-info"><label>מזודה</label><span>20 ק"ג (שמעון)</span></div>
+                </div>
+            </div>
+
+            <div class="ticket-card" style="border-top-color: #FF512F;">
+                <div class="ticket-header">
+                    <h3 style="color: #FF512F;"><i class="fa-solid fa-plane-arrival"></i> חזור: LCA ⬅ TLV</h3>
+                    <p>ALK AIRLINES (TUS) | טיסה U8102</p>
+                    <div class="ticket-pnr">כרטיס: 2510029376248</div>
+                </div>
+                <div class="ticket-body">
+                    <div class="ticket-info"><label>תאריך</label><span>יום ש', 05.09.26</span></div>
+                    <div class="ticket-info"><label>המראה</label><span>20:30 LCA</span></div>
+                    <div class="ticket-info"><label>נחיתה</label><span>21:30 TLV</span></div>
+                    <div class="ticket-info"><label>מזודה</label><span>20 ק"ג (שמעון)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 1 -->
+        <div id="day1" class="tab-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">18:50 - 19:55</span>
+                        <div class="timeline-title">טיסה ללרנקה</div>
+                        <div class="timeline-desc">טיסת TUS Airways U8107. נחיתה ב-19:55.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">20:30 - 21:30</span>
+                        <div class="timeline-title">הסעה למלון</div>
+                        <div class="timeline-desc">נסיעה פרטית למלון NYX Limassol.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">22:00 והלאה</span>
+                        <div class="timeline-title">דרינק בעיר העתיקה</div>
+                        <div class="timeline-desc">יציאה רגלית לקוקטייל ב-Library Bar.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-title"><i class="fa-solid fa-camera"></i> תמונות</div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=400&q=80" alt="NYX Hotel">
+                    <div class="gallery-caption">NYX Hotel</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=400&q=80" alt="Library Bar">
+                    <div class="gallery-caption">Library Bar</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 2 -->
+        <div id="day2" class="tab-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">11:00 - 14:00</span>
+                        <div class="timeline-title">קפה ושופינג</div>
+                        <div class="timeline-desc">שיטוט זוגי בעיר העתיקה ובAnexartisias.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">14:00 - 17:00</span>
+                        <div class="timeline-title">בריכת הרופטופ</div>
+                        <div class="timeline-desc">זמן איכות ברופטופ של NYX.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">17:00 - 19:30</span>
+                        <div class="timeline-title">מסעדת בשרים ושקיעה</div>
+                        <div class="timeline-desc">ארוחה ב-Columbia Steak House וטיול בנמל.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">22:00 והלאה</span>
+                        <div class="timeline-title">מסיבה ב-Breeze</div>
+                        <div class="timeline-desc">יוצאים לרקוד ב-Breeze Summer Club!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-title"><i class="fa-solid fa-camera"></i> תמונות</div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="Steakhouse">
+                    <div class="gallery-caption">Columbia Steak</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Old Port">
+                    <div class="gallery-caption">הנמל הישן</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 3 -->
+        <div id="day3" class="tab-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">11:00 - 18:00</span>
+                        <div class="timeline-title">Columbia Beach</div>
+                        <div class="timeline-desc">מיטות שיזוף, בריכה, ים וקוקטיילים.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">21:00 - 23:30</span>
+                        <div class="timeline-title">ארוחה במרינה</div>
+                        <div class="timeline-desc">ארוחת ערב זוגית מול המגה-יאכטות.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-title"><i class="fa-solid fa-camera"></i> תמונות</div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=400&q=80" alt="Columbia Beach">
+                    <div class="gallery-caption">Columbia Beach</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=400&q=80" alt="Limassol Marina">
+                    <div class="gallery-caption">המרינה</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 4 -->
+        <div id="day4" class="tab-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">10:00 - 13:00</span>
+                        <div class="timeline-title">בראנץ' ושופינג אחרון</div>
+                        <div class="timeline-desc">בראנץ' בעיר העתיקה וקניות אחרונות.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">17:30</span>
+                        <div class="timeline-title">איסוף לשדה</div>
+                        <div class="timeline-desc">הסעה פרטית לשדה התעופה בלרנקה.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-card">
+                        <span class="timeline-time">20:30</span>
+                        <div class="timeline-title">טיסה חזרה</div>
+                        <div class="timeline-desc">טיסה U8102, נחיתה ב-21:30 בישראל.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-title"><i class="fa-solid fa-camera"></i> תמונות</div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80" alt="Molos">
+                    <div class="gallery-caption">טיילת Molos</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80" alt="Brunch">
+                    <div class="gallery-caption">בראנץ'</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations Carousel -->
+        <div class="carousel-section">
+            <div class="carousel-header">
+                <h3><i class="fa-solid fa-lightbulb"></i> המלצות מתחלפות</h3>
+            </div>
+            
+            <div class="carousel-container">
+                <div class="rec-slide active">
+                    <h4><i class="fa-solid fa-mug-hot"></i> בראנץ': Jam Limassol</h4>
+                    <p>ארוחות בוקר מושקעות ואווירה קסומה בעיר העתיקה.</p>
+                </div>
+                <div class="rec-slide">
+                    <h4><i class="fa-solid fa-cocktail"></i> קוקטיילים: Koki Bar</h4>
+                    <p>בר סודי ומעוצב בסמטאות העיר העתיקה, מומלץ לערב זוגי.</p>
+                </div>
+                <div class="rec-slide">
+                    <h4><i class="fa-solid fa-landmark"></i> טירת לימסול</h4>
+                    <p>3 דקות הליכה מהמלון! טיול קצר ורומנטי בין הסמטאות.</p>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn" onclick="prevSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+                <button class="carousel-btn" onclick="nextSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        /* Carousel Logic */
+        var currentSlide = 0;
+        var slides = document.getElementsByClassName("rec-slide");
+
+        function showSlide(index) {
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                slides[i].classList.remove("active");
+            }
+            slides[index].style.display = "block";
+            slides[index].classList.add("active");
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        setInterval(nextSlide, 4000);
+    </script>
+</body>
+</html>
